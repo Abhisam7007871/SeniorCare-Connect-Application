@@ -13,39 +13,49 @@ public class HealthDiaryEntryService {
     @Autowired
     private HealthDiaryEntryRepository repository;
 
+    // Fetches all health diary entries for a specific elderly person
     public List<HealthDiaryEntry> findByElderlyPersonId(Long elderlyPersonId) {
         return repository.findByElderlyPersonId(elderlyPersonId);
     }
 
-    public HealthDiaryEntry CreateHealthDiary(HealthDiaryEntry entry) {
+    // Creates a new health diary entry
+    public HealthDiaryEntry createHealthDiary(HealthDiaryEntry entry) {
+        // Optional: Validate the entry before saving
+        if (entry.getElderlyPerson() == null) {
+            throw new IllegalArgumentException("Elderly person must not be null");
+        }
         return repository.save(entry);
     }
 
-    public HealthDiaryEntry getHealthDiaryById(Long id){
+    // Fetches a health diary entry by ID
+    public HealthDiaryEntry getHealthDiaryById(Long id) {
+        // Optional: Consider throwing a custom exception here
         return repository.findById(id).orElse(null);
     }
 
-    public HealthDiaryEntry updateHealthDiary(Long id, HealthDiaryEntry healthDiaryEntry){
-        HealthDiaryEntry healthDiaryEntry1 = repository.findById(id).orElseThrow(()-> new RuntimeException("Health Diary Not Found"));
-        healthDiaryEntry1.setDate(healthDiaryEntry.getDate());
-        healthDiaryEntry1.setElderlyPerson(healthDiaryEntry.getElderlyPerson());
-        healthDiaryEntry1.setNotes(healthDiaryEntry.getNotes());
-        healthDiaryEntry1.setSymptoms(healthDiaryEntry.getSymptoms());
+    // Updates an existing health diary entry
+    public HealthDiaryEntry updateHealthDiary(Long id, HealthDiaryEntry healthDiaryEntry) {
+        HealthDiaryEntry existingEntry = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Health Diary Not Found"));
 
-        return repository.save(healthDiaryEntry1);
+        // Update fields from the incoming entry
+        existingEntry.setDate(healthDiaryEntry.getDate());
+        existingEntry.setElderlyPerson(healthDiaryEntry.getElderlyPerson());
+        existingEntry.setNotes(healthDiaryEntry.getNotes());
+        existingEntry.setSymptoms(healthDiaryEntry.getSymptoms());
+
+        return repository.save(existingEntry);
     }
 
-    public  String deleteHealthDiary(Long id){
+    // Deletes a health diary entry by ID
+    public String deleteHealthDiary(Long id) {
+        // Check if the entry exists before trying to delete
         Optional<HealthDiaryEntry> healthDiaryEntry = repository.findById(id);
-        if(healthDiaryEntry.isPresent()){
-            HealthDiaryEntry healthDiaryEntry1 = healthDiaryEntry.get();
+        if (healthDiaryEntry.isPresent()) {
             repository.deleteById(id);
-
-            return "Deleted Health Diary Entry with id: " + healthDiaryEntry1.getId();
-        }else{
-            return "Deleted Health Diary Entry with id: " + id + " not found";
+            return "Deleted Health Diary Entry with id: " + id;
+        } else {
+            return "Health Diary Entry with id: " + id + " not found";
         }
     }
-
-
 }

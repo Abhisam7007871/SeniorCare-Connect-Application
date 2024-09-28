@@ -14,43 +14,49 @@ public class ElderlyPersonService {
     @Autowired
     private ElderlyPersonRepository epRepository;
 
-    public List<ElderlyPerson> getAllElderlyPerson(){
+    // Retrieve all elderly persons
+    public List<ElderlyPerson> getAllElderlyPersons() {
         return epRepository.findAll();
     }
 
-    public ElderlyPerson getElderlyPersonById(Long id){
+    // Get an elderly person by ID
+    public ElderlyPerson getElderlyPersonById(Long id) {
         return epRepository.findById(id).orElse(null);
     }
 
-    public ElderlyPerson createElderlyPerson(ElderlyPerson elderlyPerson){
+    // Create a new elderly person profile
+    public ElderlyPerson createElderlyPerson(ElderlyPerson elderlyPerson) {
+        // You could add more validation here (e.g., checking if mandatory fields are filled)
         return epRepository.save(elderlyPerson);
     }
 
-    public ElderlyPerson updateElderlyPerson(Long id, ElderlyPerson elderlyPerson){
-        ElderlyPerson elderlyPerson1 = epRepository.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
-        elderlyPerson1.setAddress(elderlyPerson.getAddress());
-        elderlyPerson1.setAppointments(elderlyPerson.getAppointments());
-        elderlyPerson1.setEmergencyContactName(elderlyPerson.getEmergencyContactName());
-        elderlyPerson1.setEmergencyContactNumber(elderlyPerson.getEmergencyContactNumber());
-        elderlyPerson1.setHealthConditions(elderlyPerson.getHealthConditions());
-        elderlyPerson1.setMedications(elderlyPerson.getMedications());
-        elderlyPerson1.setMobile(elderlyPerson.getMobile());
-        elderlyPerson1.setName(elderlyPerson.getName());
-        elderlyPerson1.setNotes(elderlyPerson.getNotes());
+    // Update an existing elderly person's profile
+    public ElderlyPerson updateElderlyPerson(Long id, ElderlyPerson updatedElderlyPerson) {
+        ElderlyPerson existingPerson = epRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Elderly Person Not Found with id: " + id));
 
-        return epRepository.save(elderlyPerson1);
+        // Update fields with the incoming details
+        existingPerson.setAddress(updatedElderlyPerson.getAddress());
+        existingPerson.setAppointments(updatedElderlyPerson.getAppointments());
+        existingPerson.setEmergencyContactName(updatedElderlyPerson.getEmergencyContactName());
+        existingPerson.setEmergencyContactNumber(updatedElderlyPerson.getEmergencyContactNumber());
+        existingPerson.setHealthConditions(updatedElderlyPerson.getHealthConditions());
+        existingPerson.setMedications(updatedElderlyPerson.getMedications());
+        existingPerson.setMobile(updatedElderlyPerson.getMobile());
+        existingPerson.setName(updatedElderlyPerson.getName());
+        existingPerson.setNotes(updatedElderlyPerson.getNotes());
+
+        return epRepository.save(existingPerson);
     }
 
-    public String deleteElderlyPerson(Long id){
-        Optional<ElderlyPerson> elderlyPersonDel = epRepository.findById(id);
-        if(elderlyPersonDel.isPresent()){
-            ElderlyPerson elderlyPerson = elderlyPersonDel.get();
+    // Delete an elderly person's profile
+    public String deleteElderlyPerson(Long id) {
+        Optional<ElderlyPerson> elderlyPersonOptional = epRepository.findById(id);
+        if (elderlyPersonOptional.isPresent()) {
             epRepository.deleteById(id);
-
-            return "Deleted details with id: " + elderlyPerson.getId();
-        }else{
-            return "Deleted details with id: " + id + " not found";
+            return "Deleted elderly person with ID: " + id;
+        } else {
+            return "Elderly person with ID: " + id + " not found";
         }
     }
-
 }
