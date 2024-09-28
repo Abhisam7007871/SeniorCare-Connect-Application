@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.List;
+
 @Entity
 public class ElderlyPerson {
 
@@ -13,9 +15,9 @@ public class ElderlyPerson {
     private Long id;
 
     private String name;
-    private String healthConditions;
-    private String medications;
-    private String appointments;
+    private List<String> healthConditions;
+    private List<String> medications;
+    private List<String> appointments;
     private String address;
     private String mobile;
     private String emergencyContactName;
@@ -41,27 +43,27 @@ public class ElderlyPerson {
         this.name = name;
     }
 
-    public String getHealthConditions() {
+    public List<String> getHealthConditions() {
         return healthConditions;
     }
 
-    public void setHealthConditions(String healthConditions) {
+    public void setHealthConditions(List<String> healthConditions) {
         this.healthConditions = healthConditions;
     }
 
-    public String getMedications() {
+    public List<String> getMedications() {
         return medications;
     }
 
-    public void setMedications(String medications) {
+    public void setMedications(List<String> medications) {
         this.medications = medications;
     }
 
-    public String getAppointments() {
+    public List<String> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(String appointments) {
+    public void setAppointments(List<String> appointments) {
         this.appointments = appointments;
     }
 
