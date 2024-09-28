@@ -31,23 +31,23 @@ public class ElderlyPersonService {
     }
 
     // Update an existing elderly person's profile
-    public ElderlyPerson updateElderlyPerson(Long id, ElderlyPerson updatedElderlyPerson) {
-        ElderlyPerson existingPerson = epRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Elderly Person Not Found with id: " + id));
+    public ElderlyPerson updateElderlyPerson(Long id, ElderlyPerson elderlyPerson){
+        ElderlyPerson existingPerson = epRepository.findById(id).orElseThrow(()-> new RuntimeException("ElderlyPerson Not Found"));
 
-        // Update fields with the incoming details
-        existingPerson.setAddress(updatedElderlyPerson.getAddress());
-        existingPerson.setAppointments(updatedElderlyPerson.getAppointments());
-        existingPerson.setEmergencyContactName(updatedElderlyPerson.getEmergencyContactName());
-        existingPerson.setEmergencyContactNumber(updatedElderlyPerson.getEmergencyContactNumber());
-        existingPerson.setHealthConditions(updatedElderlyPerson.getHealthConditions());
-        existingPerson.setMedications(updatedElderlyPerson.getMedications());
-        existingPerson.setMobile(updatedElderlyPerson.getMobile());
-        existingPerson.setName(updatedElderlyPerson.getName());
-        existingPerson.setNotes(updatedElderlyPerson.getNotes());
+        // Update the necessary fields
+        existingPerson.setAddress(elderlyPerson.getAddress());
+        existingPerson.setAppointments(elderlyPerson.getAppointments());
+        existingPerson.setEmergencyContactName(elderlyPerson.getEmergencyContactName());
+        existingPerson.setEmergencyContactNumber(elderlyPerson.getEmergencyContactNumber());
+        existingPerson.setHealthConditions(elderlyPerson.getHealthConditions());
+        existingPerson.setMedications(elderlyPerson.getMedications());
+        existingPerson.setMobile(elderlyPerson.getMobile());
+        existingPerson.setName(elderlyPerson.getName());
+        existingPerson.setNotes(elderlyPerson.getNotes());
 
-        return epRepository.save(existingPerson);
+        return epRepository.save(existingPerson);  // Save the updated entity
     }
+
 
     // Delete an elderly person's profile
     public String deleteElderlyPerson(Long id) {

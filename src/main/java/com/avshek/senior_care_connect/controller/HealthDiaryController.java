@@ -18,7 +18,7 @@ public class HealthDiaryController {
 
     @GetMapping
     public List<HealthDiaryEntry> getAllHealthDiaries() {
-        return service.findByElderlyPersonId(null); // Adjust this as needed
+        return service.getAllElderlyPersonsId(); // Adjust this as needed
     }
 
     @GetMapping("/{id}")

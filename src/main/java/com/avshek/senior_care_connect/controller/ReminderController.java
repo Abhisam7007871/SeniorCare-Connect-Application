@@ -1,5 +1,6 @@
 package com.avshek.senior_care_connect.controller;
 
+import com.avshek.senior_care_connect.model.HealthDiaryEntry;
 import com.avshek.senior_care_connect.model.Reminder;
 import com.avshek.senior_care_connect.service.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ public class ReminderController {
 
     @GetMapping
     public List<Reminder> getAllReminders() {
-        return service.findByElderlyPersonId(null); // Adjust this as needed
+        return service.getAllElderlyPersonId(); // Adjust this as needed
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Reminder> getReminderById(@PathVariable Long id) {

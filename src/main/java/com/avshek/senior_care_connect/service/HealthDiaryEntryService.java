@@ -1,6 +1,7 @@
 package com.avshek.senior_care_connect.service;
 
 import com.avshek.senior_care_connect.model.HealthDiaryEntry;
+import com.avshek.senior_care_connect.model.Reminder;
 import com.avshek.senior_care_connect.repository.HealthDiaryEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ public class HealthDiaryEntryService {
     private HealthDiaryEntryRepository repository;
 
     // Fetches all health diary entries for a specific elderly person
-    public List<HealthDiaryEntry> findByElderlyPersonId(Long elderlyPersonId) {
-        return repository.findByElderlyPersonId(elderlyPersonId);
+    public List<HealthDiaryEntry> getAllElderlyPersonsId() {
+        return repository.findAll();
     }
 
     // Creates a new health diary entry

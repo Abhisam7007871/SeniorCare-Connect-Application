@@ -1,5 +1,6 @@
 package com.avshek.senior_care_connect.service;
 
+import com.avshek.senior_care_connect.model.ElderlyPerson;
 import com.avshek.senior_care_connect.model.Reminder;
 import com.avshek.senior_care_connect.repository.ReminderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class ReminderService {
     private ReminderRepository remRepository;
 
     // Retrieve reminders for a specific elderly person
-    public List<Reminder> findByElderlyPersonId(Long elderlyPersonId) {
-        return remRepository.findByElderlyPersonId(elderlyPersonId);
+    public List<Reminder> getAllElderlyPersonId() {
+        return remRepository.findAll();
     }
 
     // Get a reminder by ID
