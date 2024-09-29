@@ -17,7 +17,7 @@ public class ElderlyPerson {
     private String name;
     private List<String> healthConditions;
     private List<String> medications;
-    private List<String> appointments;
+    private List<String> appointment;
     private String address;
     private String mobile;
     private String emergencyContactName;
@@ -60,11 +60,11 @@ public class ElderlyPerson {
     }
 
     public List<String> getAppointments() {
-        return appointments;
+        return appointment;
     }
 
     public void setAppointments(List<String> appointments) {
-        this.appointments = appointments;
+        this.appointment = appointments;
     }
 
     public String getAddress() {
