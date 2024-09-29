@@ -38,10 +38,10 @@ public class HealthDiaryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HealthDiaryEntry> updateHealthDiary(@PathVariable Long id, @RequestBody HealthDiaryEntry diaryEntry) {
-        HealthDiaryEntry updatedEntry = service.updateHealthDiary(id, diaryEntry);
-        return ResponseEntity.ok(updatedEntry);
+    public HealthDiaryEntry updateHealthDiary(@PathVariable Long id, @RequestBody HealthDiaryEntry healthDiaryEntry) {
+        return service.updateHealthDiary(id, healthDiaryEntry);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteHealthDiary(@PathVariable Long id) {

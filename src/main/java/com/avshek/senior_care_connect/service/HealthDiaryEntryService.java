@@ -1,7 +1,9 @@
 package com.avshek.senior_care_connect.service;
 
+import com.avshek.senior_care_connect.model.ElderlyPerson;
 import com.avshek.senior_care_connect.model.HealthDiaryEntry;
 import com.avshek.senior_care_connect.model.Reminder;
+import com.avshek.senior_care_connect.repository.ElderlyPersonRepository;
 import com.avshek.senior_care_connect.repository.HealthDiaryEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class HealthDiaryEntryService {
     @Autowired
     private HealthDiaryEntryRepository repository;
+
+    @Autowired
+    private ElderlyPersonRepository elderlyPersonRepository;
 
     // Fetches all health diary entries for a specific elderly person
     public List<HealthDiaryEntry> getAllElderlyPersonsId() {
@@ -37,16 +42,21 @@ public class HealthDiaryEntryService {
     // Updates an existing health diary entry
     public HealthDiaryEntry updateHealthDiary(Long id, HealthDiaryEntry healthDiaryEntry) {
         HealthDiaryEntry existingEntry = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Health Diary Not Found"));
+                .orElseThrow(() -> new RuntimeException("Health diary entry not found"));
 
-        // Update fields from the incoming entry
         existingEntry.setDate(healthDiaryEntry.getDate());
-        existingEntry.setElderlyPerson(healthDiaryEntry.getElderlyPerson());
         existingEntry.setNotes(healthDiaryEntry.getNotes());
         existingEntry.setSymptoms(healthDiaryEntry.getSymptoms());
 
-        return repository.save(existingEntry);
+        // Update elderly person relationship
+        ElderlyPerson elderlyPerson = elderlyPersonRepository.findById(healthDiaryEntry.getElderlyPerson().getId())
+                .orElseThrow(() -> new RuntimeException("Elderly person not found"));
+        existingEntry.setElderlyPerson(elderlyPerson);
+
+        return repository
+                .save(existingEntry);
     }
+
 
     // Deletes a health diary entry by ID
     public String deleteHealthDiary(Long id) {
